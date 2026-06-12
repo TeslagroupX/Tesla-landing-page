@@ -10,7 +10,15 @@
     "serve:ssr:tesla-landing-page": "node dist/tesla-landing-page/server/server.mjs"
   },
   "private": true,
-  "packageManager": "pnpm@11.1.2",
+  "packageManager": "pnpm@11.6.0+sha512.9a36518224080c6fe5165afdcfe79bfa118c29be703f3f462b1e32efe1e98e47e8750b148e08286250aad4113cc7993ca413c4e2cd447752708c2ee5751bc95f",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "lmdb",
+      "msgpackr-extract"
+    ]
+  },
   "dependencies": {
     "@angular/common": "^22.0.0",
     "@angular/compiler": "^22.0.0",
