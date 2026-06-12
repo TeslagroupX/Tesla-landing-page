@@ -1,5 +1,6 @@
-onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - esbuild
-  - lmdb
-  - msgpackr-extract
+# pnpm 11: build scripts must be explicitly approved (strictDepBuilds is on by default)
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  lmdb: true
+  msgpackr-extract: true
