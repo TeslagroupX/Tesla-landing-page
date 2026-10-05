@@ -1,0 +1,35 @@
+<section id="sectores" class="track on-dark" aria-labelledby="track-title">
+  <div class="container track__grid">
+    <div class="track__head" appReveal>
+      <p class="eyebrow">Trayectoria</p>
+      <h2 id="track-title" class="h2">Experiencia comprobada en la industria peruana.</h2>
+    </div>
+
+    <dl #list class="track__metrics">
+      @for (metric of metrics; track metric.label; let i = $index) {
+        <div class="metric">
+          <dt class="metric__label">{{ metric.label }}</dt>
+          <dd class="metric__value">
+            @if (metric.value === null) {
+              <span class="pending">{{ metric.placeholder }}</span>
+            } @else {
+              <span class="visually-hidden">{{ metric.prefix }}{{ metric.value }}</span>
+              <span aria-hidden="true">{{ metric.prefix }}{{ shown()[i] }}</span>
+            }
+          </dd>
+        </div>
+      }
+    </dl>
+  </div>
+</section>
+
+<div class="partners">
+  <div class="container partners__inner">
+    <p class="partners__label" id="partners-label">Respaldo tecnológico</p>
+    <ul class="partners__list" aria-labelledby="partners-label">
+      @for (partner of partners; track partner) {
+        <li class="partners__chip">{{ partner }}</li>
+      }
+    </ul>
+  </div>
+</div>

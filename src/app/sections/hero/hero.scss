@@ -1,0 +1,218 @@
+@use 'breakpoints' as bp;
+
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: max(88svh, 560px);
+  background: var(--graphite);
+  color: #fff;
+
+  @include bp.tablet {
+    min-height: max(80svh, 600px);
+  }
+
+  @include bp.desktop {
+    min-height: max(100svh, 640px);
+  }
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+  padding: 104px var(--margin) 0;
+}
+
+// Degradado grafito hacia arriba (90 % · 50 % al 40 % · 0 al 65 %) y un velo bajo el header.
+.hero__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgb(25 24 28 / 45%), rgb(25 24 28 / 0%) 24%),
+    linear-gradient(to top, rgb(25 24 28 / 90%) 0%, rgb(25 24 28 / 50%) 40%, rgb(25 24 28 / 0%) 65%);
+}
+
+.hero__content {
+  position: relative;
+  padding-block: 120px 32px;
+
+  @include bp.tablet {
+    padding-bottom: 48px;
+  }
+}
+
+.hero__text {
+  display: grid;
+  gap: 16px;
+  animation: rise var(--t-reveal) var(--ease-out) both;
+
+  // 6 de 8 columnas en tablet, 6 de 12 en desktop.
+  @include bp.tablet {
+    gap: 20px;
+    max-width: 75%;
+  }
+
+  @include bp.desktop {
+    max-width: calc(50% - var(--gutter) / 2);
+  }
+}
+
+.hero__eyebrow {
+  color: #fff;
+}
+
+.hero__title {
+  font: 900 var(--fs-display) / 1.06 var(--font-display);
+  // En pantallas bajas (un portátil de 768 px, un móvil apaisado) el titular cede para que los
+  // botones no se salgan de la primera pantalla.
+  font-size: clamp(2rem, 8.4svh, var(--fs-display));
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.hero__lead {
+  max-width: 34em;
+  font-size: var(--fs-lead);
+  line-height: 1.54;
+  color: var(--line);
+}
+
+.hero__ctas {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin-top: 8px;
+
+  .btn--primary {
+    width: 100%;
+  }
+
+  @include bp.tablet {
+    flex-direction: row;
+    gap: 12px;
+
+    .btn--primary {
+      width: auto;
+    }
+  }
+}
+
+// En móvil el secundario es un enlace subrayado, no un segundo botón.
+.hero__secondary {
+  @include bp.below-tablet {
+    padding-inline: 0;
+    border-color: transparent;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+
+    &:hover {
+      background: none;
+      color: #fff;
+    }
+  }
+}
+
+.hero__strip {
+  position: relative;
+  display: none;
+  border-top: 1px solid rgb(255 255 255 / 18%);
+  font: 700 var(--fs-label) / 1 var(--font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  @include bp.tablet {
+    display: block;
+  }
+}
+
+.hero__strip-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 64px;
+  white-space: nowrap;
+
+  @include bp.desktop {
+    gap: 24px;
+  }
+}
+
+.hero__strip-label {
+  font-weight: 600;
+  color: var(--steel);
+}
+
+.hero__sectors {
+  display: flex;
+  gap: 16px;
+
+  @include bp.desktop {
+    gap: 24px;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration: none;
+
+    @include bp.hover {
+      text-decoration: underline;
+      text-underline-offset: 6px;
+    }
+  }
+}
+
+.hero__pause {
+  position: relative;
+  min-height: 32px;
+  margin-left: auto;
+  padding: 0 10px;
+  border: 1px solid rgb(255 255 255 / 45%);
+  border-radius: var(--radius);
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+
+  // Área táctil de 44 px sin engordar el botón.
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -6px 0;
+  }
+
+  &:disabled {
+    border-color: rgb(255 255 255 / 20%);
+    color: var(--steel);
+    cursor: not-allowed;
+  }
+}
+
+.hero__scroll {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  color: var(--field-border);
+  text-decoration: none;
+
+  @include bp.desktop {
+    display: inline-flex;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

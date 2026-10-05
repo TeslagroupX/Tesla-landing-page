@@ -1,0 +1,203 @@
+@use 'breakpoints' as bp;
+
+.solutions {
+  padding-top: 64px;
+  background: var(--surface);
+
+  @include bp.tablet {
+    padding-top: 88px;
+  }
+
+  @include bp.desktop {
+    padding-top: 120px;
+  }
+}
+
+.solutions__head {
+  display: grid;
+  gap: 24px;
+  padding-bottom: 32px;
+
+  @include bp.tablet {
+    grid-template-columns: 1fr minmax(220px, 28%);
+    align-items: end;
+    gap: 48px;
+    padding-bottom: 48px;
+  }
+}
+
+.solutions__intro {
+  display: grid;
+  gap: 12px;
+  max-width: 760px;
+}
+
+.solutions__aside {
+  display: grid;
+  gap: 12px;
+}
+
+// Párrafo de apoyo sin texto todavía: las barras del wireframe.
+.copy-bars {
+  display: grid;
+  gap: 8px;
+
+  span {
+    height: 8px;
+    border-radius: 4px;
+    background: #d5d8dc;
+
+    &:last-child {
+      width: 80%;
+    }
+  }
+}
+
+// A sangre y sin separación: móvil es un carrusel, desde tablet tres columnas.
+.solutions__panels {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include bp.tablet {
+    overflow: hidden;
+  }
+}
+
+.panel {
+  position: relative;
+  display: flex;
+  flex: 0 0 84%;
+  align-items: flex-end;
+  min-height: 420px;
+  overflow: hidden;
+  border-right: 1px solid rgb(255 255 255 / 20%);
+  color: #fff;
+  scroll-snap-align: start;
+
+  @include bp.tablet {
+    flex: 1 1 0;
+    min-height: 440px;
+    transition: flex-grow var(--t-panel) var(--ease-out);
+  }
+
+  @include bp.desktop {
+    min-height: 560px;
+
+    &.is-open {
+      flex-grow: 1.55;
+    }
+  }
+}
+
+.panel__media {
+  position: absolute;
+  inset: 0;
+  padding: 20px 24px;
+  transition: transform var(--t-panel) var(--ease-out);
+
+  .is-open & {
+    @include bp.desktop {
+      transform: scale(1.04);
+    }
+  }
+}
+
+.panel__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(25 24 28 / 92%), rgb(25 24 28 / 0%) 70%);
+}
+
+.panel__body {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  padding: 24px;
+
+  @include bp.desktop {
+    padding: 32px;
+  }
+}
+
+.panel__number {
+  font:
+    600 0.8125rem / 1 ui-monospace,
+    monospace;
+  color: var(--steel);
+}
+
+.panel__title {
+  font: 800 var(--fs-h3) / 1.15 var(--font-display);
+}
+
+.panel__more {
+  display: grid;
+  gap: 4px;
+  color: var(--line);
+
+  // En desktop el detalle entra con el panel, 120 ms después.
+  @include bp.desktop {
+    max-height: 0;
+    opacity: 0;
+    transition:
+      max-height var(--t-panel) var(--ease-out),
+      opacity var(--t-panel) var(--ease-out);
+
+    .is-open & {
+      max-height: 12em;
+      opacity: 1;
+      transition-delay: 120ms;
+    }
+  }
+}
+
+.solutions__pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 16px;
+
+  @include bp.tablet {
+    display: none;
+  }
+}
+
+.solutions__count {
+  font:
+    600 0.8125rem / 1 ui-monospace,
+    monospace;
+  color: var(--text-muted);
+}
+
+.solutions__dots {
+  display: flex;
+}
+
+.solutions__dot {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--field-border);
+  }
+
+  &.is-current::before {
+    background: var(--graphite);
+  }
+}

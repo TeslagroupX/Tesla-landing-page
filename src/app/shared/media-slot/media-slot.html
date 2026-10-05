@@ -1,0 +1,5 @@
+@if (src(); as source) {
+  <img class="media-slot__image" [src]="source" [alt]="label()" loading="lazy" decoding="async" />
+} @else {
+  <span class="media-slot__label">{{ label() }}</span>
+}

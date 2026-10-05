@@ -1,0 +1,278 @@
+<section id="contacto" class="contact section" aria-labelledby="contact-title">
+  <div class="container contact__grid">
+    <div class="contact__info" appReveal>
+      <p class="eyebrow">Contacto</p>
+      <h2 id="contact-title" class="h2">Conversemos sobre su próximo proyecto.</h2>
+      <p class="muted">
+        Un especialista le responderá en menos de
+        @if (info.responseHours) {
+          {{ info.responseHours }}
+        } @else {
+          <span class="pending">{{ info.responseHoursPlaceholder }}</span>
+        }
+        horas hábiles.
+      </p>
+      <address class="contact__channels">
+        <a [href]="'mailto:' + info.email">{{ info.email }}</a>
+        @if (info.phone) {
+          <a [href]="'tel:' + info.phone">{{ info.phone }}</a>
+        } @else {
+          <span class="pending">{{ info.phonePlaceholder }}</span>
+        }
+        <span class="muted">{{ info.city }} · {{ info.address }}</span>
+      </address>
+    </div>
+
+    @if (status() === 'sent') {
+      <div #done class="contact__done" role="status" tabindex="-1">
+        <h3 class="h3">{{ doneTitle() }}</h3>
+        <p>Le escribiremos a {{ sentTo() }}.</p>
+        <button type="button" class="link-arrow contact__again" (click)="status.set('idle')">
+          Enviar otra solicitud <span class="arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    } @else {
+      <form class="form" [formGroup]="form" (ngSubmit)="submit()" [appReveal]="1">
+        <div class="form__fields">
+          <div class="field">
+            <label class="field__label" for="contact-name">Nombre y apellido</label>
+            <input
+              id="contact-name"
+              class="field__control"
+              type="text"
+              formControlName="name"
+              autocomplete="name"
+              required
+              [attr.maxlength]="rules.name.max"
+              [attr.aria-invalid]="shows('name') || null"
+              [attr.aria-describedby]="shows('name') ? 'contact-name-error' : null"
+            />
+            @if (shows('name')) {
+              <p class="field__error" id="contact-name-error">{{ message('name') }}</p>
+            }
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="contact-company">Empresa</label>
+            <input
+              id="contact-company"
+              class="field__control"
+              type="text"
+              formControlName="company"
+              autocomplete="organization"
+              required
+              [attr.maxlength]="rules.company.max"
+              [attr.aria-invalid]="shows('company') || null"
+              [attr.aria-describedby]="shows('company') ? 'contact-company-error' : null"
+            />
+            @if (shows('company')) {
+              <p class="field__error" id="contact-company-error">{{ message('company') }}</p>
+            }
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="contact-email">Correo corporativo</label>
+            <input
+              id="contact-email"
+              class="field__control"
+              type="email"
+              formControlName="email"
+              autocomplete="email"
+              inputmode="email"
+              required
+              [attr.maxlength]="rules.email.max"
+              [attr.aria-invalid]="shows('email') || null"
+              [attr.aria-describedby]="shows('email') ? 'contact-email-error' : null"
+            />
+            @if (shows('email')) {
+              <p class="field__error" id="contact-email-error">{{ message('email') }}</p>
+            }
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="contact-phone">Teléfono</label>
+            <input
+              id="contact-phone"
+              class="field__control"
+              type="tel"
+              formControlName="phone"
+              autocomplete="tel"
+              inputmode="tel"
+              required
+              [attr.maxlength]="rules.phone.max"
+              [attr.aria-invalid]="shows('phone') || null"
+              [attr.aria-describedby]="shows('phone') ? 'contact-phone-error' : null"
+            />
+            @if (shows('phone')) {
+              <p class="field__error" id="contact-phone-error">{{ message('phone') }}</p>
+            }
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="contact-sector">Sector</label>
+            <select
+              id="contact-sector"
+              class="field__control field__control--select"
+              formControlName="sector"
+              required
+              [attr.aria-invalid]="shows('sector') || null"
+              [attr.aria-describedby]="shows('sector') ? 'contact-sector-error' : null"
+            >
+              <option value="" disabled>Seleccione</option>
+              @for (option of sectorOptions; track option.id) {
+                <option [value]="option.id">{{ option.label }}</option>
+              }
+            </select>
+            @if (shows('sector')) {
+              <p class="field__error" id="contact-sector-error">{{ message('sector') }}</p>
+            }
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="contact-solution">Solución de interés</label>
+            <select
+              id="contact-solution"
+              class="field__control field__control--select"
+              formControlName="solution"
+              required
+              [attr.aria-invalid]="shows('solution') || null"
+              [attr.aria-describedby]="shows('solution') ? 'contact-solution-error' : null"
+            >
+              <option value="" disabled>Seleccione</option>
+              @for (option of solutionOptions; track option.id) {
+                <option [value]="option.id">{{ option.label }}</option>
+              }
+            </select>
+            @if (shows('solution')) {
+              <p class="field__error" id="contact-solution-error">{{ message('solution') }}</p>
+            }
+          </div>
+
+          <div class="field field--wide">
+            <label class="field__label" for="contact-description"
+              >Descripción del requerimiento</label
+            >
+            <textarea
+              id="contact-description"
+              class="field__control field__control--area"
+              formControlName="description"
+              rows="4"
+              required
+              [attr.maxlength]="rules.description.max"
+              [attr.aria-invalid]="shows('description') || null"
+              [attr.aria-describedby]="shows('description') ? 'contact-description-error' : null"
+            ></textarea>
+            @if (shows('description')) {
+              <p class="field__error" id="contact-description-error">
+                {{ message('description') }}
+              </p>
+            }
+          </div>
+        </div>
+
+        <div
+          class="attach"
+          [class.is-dragging]="dragging()"
+          [class.has-error]="attachmentError()"
+          (dragover)="dragOver($event)"
+          (dragleave)="dragging.set(false)"
+          (drop)="drop($event)"
+        >
+          <input
+            id="contact-attachment"
+            class="visually-hidden"
+            type="file"
+            accept=".pdf,.dwg,application/pdf"
+            [attr.aria-describedby]="
+              attachmentError()
+                ? 'contact-attachment-hint contact-attachment-error'
+                : 'contact-attachment-hint'
+            "
+            (change)="pick($event)"
+          />
+          @if (attachment(); as file) {
+            <p class="attach__file">
+              <span class="attach__name">{{ file.name }}</span>
+              <span class="muted">{{ formatBytes(file.size) }}</span>
+            </p>
+            <button type="button" class="attach__remove" (click)="removeAttachment()">
+              Quitar<span class="visually-hidden"> el archivo adjunto</span>
+            </button>
+          } @else {
+            <label class="attach__label" for="contact-attachment">
+              <span aria-hidden="true">↑</span> Adjuntar especificaciones o bases
+            </label>
+          }
+          <p class="attach__hint" id="contact-attachment-hint">PDF, DWG · máx. 25 MB</p>
+        </div>
+        @if (attachmentError(); as problem) {
+          <p class="field__error" id="contact-attachment-error" role="alert">{{ problem }}</p>
+        }
+
+        <div class="form__trap" aria-hidden="true">
+          <label for="contact-website">Sitio web</label>
+          <input
+            id="contact-website"
+            type="text"
+            formControlName="website"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+
+        @if (status() === 'failed') {
+          <p class="form__failure" role="alert">
+            {{ failure() }} También puede escribirnos a
+            <a [href]="'mailto:' + info.email">{{ info.email }}</a
+            >.
+          </p>
+        }
+
+        <div class="form__foot">
+          <div class="consent">
+            <input
+              id="contact-consent"
+              class="consent__box"
+              type="checkbox"
+              formControlName="consent"
+              required
+              [attr.aria-invalid]="shows('consent') || null"
+              [attr.aria-describedby]="shows('consent') ? 'contact-consent-error' : null"
+            />
+            <label for="contact-consent">Acepto el tratamiento de mis datos (Ley N.º 29733)</label>
+            @if (shows('consent')) {
+              <p class="field__error consent__error" id="contact-consent-error">
+                {{ message('consent') }}
+              </p>
+            }
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn--primary form__submit"
+            [disabled]="status() === 'sending'"
+          >
+            @if (status() === 'sending') {
+              Enviando… {{ progress() }} %
+            } @else {
+              Enviar solicitud <span class="arrow" aria-hidden="true">→</span>
+            }
+          </button>
+        </div>
+
+        @if (status() === 'sending') {
+          <div
+            class="form__progress"
+            role="progressbar"
+            aria-label="Envío de la solicitud"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [attr.aria-valuenow]="progress()"
+          >
+            <span [style.transform]="'scaleX(' + progress() / 100 + ')'"></span>
+          </div>
+        }
+      </form>
+    }
+  </div>
+</section>

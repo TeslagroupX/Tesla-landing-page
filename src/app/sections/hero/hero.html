@@ -1,0 +1,35 @@
+<section id="inicio" class="hero on-dark" aria-labelledby="hero-title">
+  <app-media-slot class="hero__media" labelAt="top-end" [label]="hero.media" [src]="hero.poster" />
+  <div class="hero__shade" aria-hidden="true"></div>
+
+  <div class="container hero__content">
+    <div class="hero__text">
+      <p class="eyebrow hero__eyebrow">{{ hero.eyebrow }}</p>
+      <h1 id="hero-title" class="hero__title">{{ hero.title }}</h1>
+      <p class="hero__lead">{{ hero.lead }}</p>
+      <div class="hero__ctas">
+        <a class="btn btn--primary" href="#contacto">
+          Cotizar proyecto <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn--outline hero__secondary" href="#soluciones">Ver soluciones</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__strip">
+    <div class="container hero__strip-inner">
+      <span class="hero__strip-label" id="hero-sectors">Sectores</span>
+      <ul class="hero__sectors" aria-labelledby="hero-sectors">
+        @for (sector of sectors; track sector.id) {
+          <li>
+            <a href="#casos" (click)="state.sector.set(sector.id)">{{ sector.label }}</a>
+          </li>
+        }
+      </ul>
+      <button type="button" class="hero__pause" [disabled]="!hero.video">
+        <span aria-hidden="true">❚❚</span> Pausa
+      </button>
+      <a class="hero__scroll" href="#soluciones">Scroll <span aria-hidden="true">↓</span></a>
+    </div>
+  </div>
+</section>

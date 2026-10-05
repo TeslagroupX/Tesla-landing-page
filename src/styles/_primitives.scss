@@ -1,0 +1,266 @@
+// Piezas que comparten todos los bloques. Viven aquí y no en cada componente porque el budget de
+// estilos por componente (angular.json) es de 4 kB.
+
+@use 'breakpoints' as bp;
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.64;
+  color: var(--graphite);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p,
+figure {
+  margin: 0;
+}
+
+ul[class],
+ol[class] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+// Foco: anillo de 2 px separado 3 px. Grafito sobre claro, blanco sobre oscuro.
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.on-dark {
+  --focus: #fff;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--margin);
+}
+
+.section {
+  padding-block: 64px;
+
+  @include bp.tablet {
+    padding-block: 88px;
+  }
+
+  @include bp.desktop {
+    padding-block: 120px;
+  }
+}
+
+// Tipografía
+.eyebrow {
+  font: 700 var(--fs-label) / 1.23 var(--font-body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red-action);
+
+  .on-dark & {
+    color: var(--steel);
+  }
+}
+
+.h2 {
+  font: 800 var(--fs-h2) / 1.14 var(--font-display);
+  text-wrap: balance;
+}
+
+.h3 {
+  font: 700 var(--fs-h3) / 1.24 var(--font-display);
+}
+
+.lead {
+  font: 300 var(--fs-lead) / 1.54 var(--font-body);
+}
+
+.muted {
+  color: var(--text-muted);
+
+  .on-dark & {
+    color: var(--steel-light);
+  }
+}
+
+// Dato sin confirmar: se ve como pendiente, no como contenido final.
+.pending {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  letter-spacing: 0;
+}
+
+// Botones
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 20px;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius);
+  font: 700 1rem / 1.25 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--t-cta) ease-out,
+    color var(--t-cta) ease-out,
+    border-color var(--t-cta) ease-out;
+
+  .arrow {
+    transition: transform var(--t-cta) ease-out;
+  }
+
+  @include bp.hover {
+    .arrow {
+      transform: translateX(4px);
+    }
+  }
+}
+
+.btn--primary {
+  background: var(--red-action);
+  color: #fff;
+
+  @include bp.hover {
+    background: var(--red-action-hover);
+  }
+}
+
+.btn--outline {
+  border-color: #fff;
+  color: #fff;
+
+  @include bp.hover {
+    background: #fff;
+    color: var(--graphite);
+  }
+}
+
+.btn[aria-disabled='true'],
+.btn:disabled {
+  background: var(--line);
+  border-color: transparent;
+  color: var(--text-muted);
+  cursor: not-allowed;
+
+  .arrow {
+    transform: none;
+  }
+}
+
+// Enlace con flecha
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font: 700 1rem / 1.25 var(--font-body);
+  color: var(--red-action);
+  text-decoration: none;
+
+  .arrow {
+    transition: transform var(--t-cta) ease-out;
+  }
+
+  @include bp.hover {
+    color: var(--red-action-hover);
+
+    .arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  .on-dark & {
+    color: #fff;
+  }
+
+  &[aria-disabled='true'] {
+    color: var(--text-muted);
+    cursor: not-allowed;
+
+    .arrow {
+      transform: none;
+    }
+
+    .on-dark & {
+      color: var(--steel);
+    }
+  }
+}
+
+// Entrada de sección (directiva appReveal). Solo se oculta lo que la directiva "arma" en el
+// navegador: sin JavaScript todo queda visible.
+.reveal--armed {
+  opacity: 0;
+  transform: translateY(16px);
+
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--t-reveal) var(--ease-out),
+      transform var(--t-reveal) var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+}
+
+@include bp.reduced-motion {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal--armed {
+    opacity: 1;
+    transform: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 100ms !important;
+    transition-delay: 0ms !important;
+  }
+}

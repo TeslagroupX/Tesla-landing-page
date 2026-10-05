@@ -1,0 +1,6 @@
+<a class="btn btn--primary bar__quote" href="#contacto">Cotizar proyecto</a>
+@if (phone) {
+  <a class="btn bar__call" [href]="'tel:' + phone">Llamar</a>
+} @else {
+  <a class="btn bar__call" role="link" aria-disabled="true">Llamar</a>
+}

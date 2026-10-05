@@ -1,0 +1,40 @@
+// Los dos cortes del wireframe (bloque 08). Móvil es la base.
+
+@mixin tablet {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin below-tablet {
+  @media (max-width: 767.98px) {
+    @content;
+  }
+}
+
+@mixin below-desktop {
+  @media (max-width: 1023.98px) {
+    @content;
+  }
+}
+
+// Solo donde hay puntero fino: el hover no debe quedarse pegado en táctil.
+@mixin hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

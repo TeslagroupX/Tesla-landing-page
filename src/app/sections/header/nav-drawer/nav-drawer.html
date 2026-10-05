@@ -1,0 +1,38 @@
+<div class="drawer__backdrop" (click)="closed.emit()"></div>
+
+<div #panel class="drawer__panel on-dark" role="dialog" aria-modal="true" aria-label="Menú">
+  <div class="drawer__top">
+    <img src="assets/tesla-logo.svg" alt="Tesla Group" width="1138" height="365" />
+    <button #close type="button" class="drawer__close" (click)="closed.emit()">
+      <span class="visually-hidden">Cerrar menú</span>
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+        <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" fill="none" />
+      </svg>
+    </button>
+  </div>
+
+  <nav aria-label="Principal">
+    <ul class="drawer__menu">
+      @for (item of nav; track item.label) {
+        <li>
+          @if (item.href) {
+            <a class="drawer__link" [href]="item.href" (click)="closed.emit()">{{ item.label }}</a>
+          } @else {
+            <a class="drawer__link" role="link" aria-disabled="true">{{ item.label }}</a>
+          }
+        </li>
+      }
+    </ul>
+  </nav>
+
+  <div class="drawer__foot">
+    <a class="btn btn--primary" href="#contacto" (click)="closed.emit()">
+      Cotizar proyecto <span class="arrow" aria-hidden="true">→</span>
+    </a>
+    <div class="drawer__lang" role="group" aria-label="Idioma">
+      <span lang="es" aria-current="true">ES</span>
+      <span aria-hidden="true">|</span>
+      <a role="link" aria-disabled="true" lang="en">EN</a>
+    </div>
+  </div>
+</div>

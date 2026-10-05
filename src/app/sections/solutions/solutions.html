@@ -1,0 +1,70 @@
+<section id="soluciones" class="solutions" aria-labelledby="solutions-title">
+  <div class="container solutions__head" appReveal>
+    <div class="solutions__intro">
+      <p class="eyebrow">Soluciones</p>
+      <h2 id="solutions-title" class="h2">
+        Soluciones de integración industrial de principio a fin.
+      </h2>
+    </div>
+    <div class="solutions__aside">
+      <p class="copy-bars" role="img" aria-label="Texto de apoyo pendiente">
+        <span></span><span></span>
+      </p>
+      <a class="link-arrow" href="#contacto">
+        Hablar con un especialista <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+
+  <ul #track class="solutions__panels">
+    @for (solution of solutions; track solution.id; let i = $index) {
+      <li
+        #panel
+        class="panel on-dark"
+        [class.is-open]="open() === i"
+        (mouseenter)="open.set(i)"
+        (mouseleave)="open.set(null)"
+        (focusin)="open.set(i)"
+        (focusout)="closeIfLeft($event, panel)"
+        (click)="open.set(i)"
+      >
+        <app-media-slot class="panel__media" labelAt="top" [label]="solution.media" />
+        <div class="panel__shade" aria-hidden="true"></div>
+        <div class="panel__body">
+          <span class="panel__number">{{ solution.number }}</span>
+          <h3 class="panel__title">{{ solution.title }}</h3>
+          <div class="panel__more">
+            <p>{{ solution.summary }}</p>
+            @if (solution.href) {
+              <a class="link-arrow" [href]="solution.href">
+                Ver solución <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            } @else {
+              <a class="link-arrow" role="link" aria-disabled="true" tabindex="0">
+                Ver solución <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            }
+          </div>
+        </div>
+      </li>
+    }
+  </ul>
+
+  <div class="container solutions__pager">
+    <span class="solutions__count" aria-hidden="true"
+      >0{{ current() + 1 }} / 0{{ solutions.length }}</span
+    >
+    <div class="solutions__dots">
+      @for (solution of solutions; track solution.id; let i = $index) {
+        <button
+          type="button"
+          class="solutions__dot"
+          [class.is-current]="current() === i"
+          [attr.aria-current]="current() === i ? 'true' : null"
+          [attr.aria-label]="'Ver ' + solution.title"
+          (click)="goTo(i)"
+        ></button>
+      }
+    </div>
+  </div>
+</section>

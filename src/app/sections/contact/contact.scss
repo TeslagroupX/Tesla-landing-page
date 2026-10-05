@@ -1,0 +1,218 @@
+@use 'breakpoints' as bp;
+
+.contact {
+  background: var(--surface);
+}
+
+// 4 + 8 columnas en desktop; apilado en tablet y móvil.
+.contact__grid {
+  display: grid;
+  gap: 40px;
+
+  @include bp.desktop {
+    grid-template-columns: 4fr 8fr;
+    gap: calc(var(--gutter) * 2);
+  }
+}
+
+.contact__info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact__channels {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-style: normal;
+  font-weight: 600;
+
+  a {
+    text-decoration: none;
+
+    @include bp.hover {
+      color: var(--red-action);
+    }
+  }
+
+  .muted {
+    font-weight: 400;
+  }
+
+  @include bp.desktop {
+    margin-top: auto;
+  }
+}
+
+.contact__done {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 32px;
+  border-left: 3px solid var(--red-action);
+  background: var(--surface-alt);
+}
+
+.contact__again {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+.form__fields {
+  display: grid;
+  gap: 16px;
+
+  @include bp.tablet {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px var(--gutter);
+  }
+}
+
+.field--wide {
+  @include bp.tablet {
+    grid-column: 1 / -1;
+  }
+}
+
+.attach {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 16px;
+  min-height: 64px;
+  padding: 10px 16px;
+  border: 1.5px dashed #a3aab0;
+  border-radius: var(--radius);
+  text-align: center;
+  transition:
+    border-color var(--t-form) ease-out,
+    background-color var(--t-form) ease-out;
+
+  &.is-dragging {
+    border-color: var(--graphite);
+    background: var(--surface-alt);
+  }
+
+  &.has-error {
+    border-color: var(--danger);
+  }
+
+  // El input está oculto a la vista: el anillo de foco lo lleva la zona entera.
+  &:has(:focus-visible) {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+}
+
+.attach__label,
+.attach__remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: 700 1rem / 1.25 var(--font-body);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.attach__file {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  min-width: 0;
+  font-weight: 600;
+}
+
+.attach__name {
+  overflow-wrap: anywhere;
+}
+
+.attach__hint {
+  flex-basis: 100%;
+  font:
+    600 0.75rem / 1.3 ui-monospace,
+    monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+// Campo trampa: fuera de la pantalla, no `display: none`.
+.form__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form__failure {
+  padding: 12px 16px;
+  border-left: 3px solid var(--danger);
+  background: #fdf2f3;
+}
+
+.form__foot {
+  display: grid;
+  gap: 16px;
+
+  @include bp.tablet {
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: var(--gutter);
+  }
+}
+
+.consent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 4px 10px;
+  min-height: 44px;
+  font-size: 0.9375rem;
+}
+
+.consent__box {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--graphite);
+}
+
+.consent__error {
+  grid-column: 1 / -1;
+}
+
+.form__submit {
+  min-width: 200px;
+}
+
+.form__progress {
+  height: 3px;
+  overflow: hidden;
+  background: var(--line);
+
+  span {
+    display: block;
+    height: 100%;
+    background: var(--red-action);
+    transform-origin: left;
+    transition: transform var(--t-form) ease-out;
+  }
+}

@@ -1,0 +1,70 @@
+<section id="casos" class="cases" aria-labelledby="cases-title">
+  <div class="container cases__head" appReveal>
+    <h2 id="cases-title" class="cases__title">Proyectos</h2>
+
+    <div class="cases__filters" role="group" aria-label="Filtrar proyectos por sector">
+      <button
+        type="button"
+        class="chip"
+        [attr.aria-pressed]="state.sector() === null"
+        (click)="state.sector.set(null)"
+      >
+        Todos
+      </button>
+      @for (sector of sectors; track sector.id) {
+        <button
+          type="button"
+          class="chip"
+          [attr.aria-pressed]="state.sector() === sector.id"
+          (click)="state.sector.set(sector.id)"
+        >
+          {{ sector.label }}
+        </button>
+      }
+    </div>
+
+    <div class="cases__arrows">
+      <button type="button" class="round" aria-label="Proyectos anteriores" (click)="scroll(-1)">
+        <span aria-hidden="true">←</span>
+      </button>
+      <button type="button" class="round" aria-label="Proyectos siguientes" (click)="scroll(1)">
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+
+  <p class="visually-hidden" aria-live="polite">
+    {{ visible().length }} {{ visible().length === 1 ? 'proyecto' : 'proyectos' }}
+  </p>
+
+  @if (visible().length > 0) {
+    <ul #track class="cases__track">
+      @for (item of visible(); track item.title) {
+        <li class="case">
+          <app-media-slot class="case__media" tone="light" label="Foto del proyecto" />
+          <div class="case__body">
+            <p class="case__meta">
+              {{ sectorLabel(item.sector) }} ·
+              @if (item.region) {
+                {{ item.region }}
+              } @else {
+                <span class="pending">[Región]</span>
+              }
+            </p>
+            <h3 class="case__title">{{ item.title }}</h3>
+            <p class="case__result">
+              Resultado ·
+              @if (item.result) {
+                {{ item.result }}
+              } @else {
+                <span class="pending">[dato medible]</span>
+              }
+            </p>
+          </div>
+        </li>
+      }
+    </ul>
+  } @else {
+    <p class="container cases__empty">Aún no hay proyectos publicados de este sector.</p>
+  }
+</section>

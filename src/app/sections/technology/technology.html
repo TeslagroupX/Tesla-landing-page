@@ -1,0 +1,38 @@
+<section id="tecnologia" class="tech on-dark" aria-labelledby="tech-title">
+  <div class="container">
+    <div class="tech__head" appReveal>
+      <p class="eyebrow">Tecnología e innovación</p>
+      <h2 id="tech-title" class="h2">
+        Digitalización que convierte los datos de planta en decisiones.
+      </h2>
+    </div>
+
+    <div class="tech__body">
+      <!-- Desktop: una sola media fija que cambia con el paso activo. Repite las de la lista. -->
+      <div class="tech__sticky" aria-hidden="true">
+        @for (step of steps; track step.number; let i = $index) {
+          <app-media-slot
+            class="tech__media"
+            [class.is-active]="active() === i"
+            [label]="step.media"
+          />
+        }
+      </div>
+
+      <ol #list class="tech__steps" [style.--progress]="progress()">
+        @for (step of steps; track step.number; let i = $index) {
+          <li class="step" [class.is-active]="active() === i">
+            <app-media-slot class="step__media" [label]="step.media" />
+            <span class="step__number">{{ step.number }}</span>
+            <h3 class="step__title">{{ step.title }}</h3>
+            <p class="step__text">{{ step.text }}</p>
+          </li>
+        }
+      </ol>
+    </div>
+
+    <a class="btn btn--primary tech__cta" href="#contacto">
+      Agendar visita técnica <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>

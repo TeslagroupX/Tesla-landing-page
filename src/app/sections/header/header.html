@@ -1,0 +1,93 @@
+<header
+  #bar
+  class="header"
+  [class.header--solid]="solid()"
+  [class.header--hidden]="hidden()"
+  [class.on-dark]="!solid()"
+>
+  <div class="container header__bar">
+    <a class="header__logo" href="#inicio" aria-label="Tesla Group, ir al inicio">
+      <img src="assets/tesla-logo.svg" alt="" width="1138" height="365" />
+    </a>
+
+    <nav class="header__nav" aria-label="Principal">
+      <ul class="header__menu">
+        @for (item of nav; track item.label) {
+          @if (item.section === 'soluciones') {
+            <li
+              #mega
+              class="header__item"
+              (mouseenter)="megaOpen.set(true)"
+              (mouseleave)="megaOpen.set(false)"
+              (focusin)="megaOpen.set(true)"
+              (focusout)="closeMega($event, mega)"
+              (keydown.escape)="megaOpen.set(false)"
+            >
+              <a
+                class="header__link"
+                [class.is-active]="active() === item.section"
+                [attr.aria-current]="active() === item.section ? 'location' : null"
+                [href]="item.href"
+                >{{ item.label }}</a
+              >
+              <div class="mega" [class.is-open]="megaOpen()">
+                <div class="mega__panel">
+                  <ul class="mega__list">
+                    @for (solution of solutions; track solution.id) {
+                      <li>
+                        <a class="mega__link" href="#soluciones" (click)="megaOpen.set(false)">
+                          <span class="mega__number">{{ solution.number }}</span>
+                          <span class="mega__title">{{ solution.title }}</span>
+                          <span class="mega__summary">{{ solution.summary }}</span>
+                        </a>
+                      </li>
+                    }
+                  </ul>
+                  <app-media-slot tone="light" label="Foto · soluciones" />
+                </div>
+              </div>
+            </li>
+          } @else {
+            <li class="header__item">
+              @if (item.href) {
+                <a
+                  class="header__link"
+                  [class.is-active]="active() === item.section"
+                  [attr.aria-current]="active() === item.section ? 'location' : null"
+                  [href]="item.href"
+                  >{{ item.label }}</a
+                >
+              } @else {
+                <a class="header__link" role="link" aria-disabled="true">{{ item.label }}</a>
+              }
+            </li>
+          }
+        }
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <div class="lang" role="group" aria-label="Idioma">
+        <span class="lang__item" lang="es" aria-current="true">ES</span>
+        <span aria-hidden="true">|</span>
+        <a class="lang__item" role="link" aria-disabled="true" lang="en">EN</a>
+      </div>
+      <a class="btn header__cta" href="#contacto">Cotizar proyecto</a>
+      <button
+        #toggle
+        type="button"
+        class="header__toggle"
+        aria-controls="nav-drawer"
+        [attr.aria-expanded]="drawerOpen()"
+        (click)="openDrawer()"
+      >
+        <span class="visually-hidden">Abrir menú</span>
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" fill="none" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<app-nav-drawer id="nav-drawer" [open]="drawerOpen()" (closed)="closeDrawer()" />

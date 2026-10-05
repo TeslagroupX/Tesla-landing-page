@@ -1,0 +1,158 @@
+@use 'breakpoints' as bp;
+
+.tech {
+  padding-block: 64px;
+  background: var(--graphite-band);
+  color: #fff;
+
+  @include bp.tablet {
+    padding-block: 88px;
+  }
+
+  @include bp.desktop {
+    padding-block: 120px;
+  }
+}
+
+.tech__head {
+  display: grid;
+  gap: 12px;
+  max-width: 800px;
+  margin-bottom: 40px;
+
+  @include bp.desktop {
+    margin-bottom: 64px;
+  }
+}
+
+.tech__body {
+  @include bp.desktop {
+    display: grid;
+    grid-template-columns: 46% 1fr;
+    align-items: start;
+    gap: calc(var(--gutter) * 3);
+  }
+}
+
+// Solo desktop: la media se queda fija mientras pasan los pasos.
+.tech__sticky {
+  display: none;
+
+  @include bp.desktop {
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+    display: grid;
+    height: min(70vh, 560px);
+    overflow: hidden;
+    border-radius: var(--radius-media);
+  }
+}
+
+.tech__media {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transition: opacity var(--t-panel) ease-out;
+
+  &.is-active {
+    opacity: 1;
+  }
+}
+
+.tech__steps {
+  display: grid;
+  gap: 40px;
+
+  @include bp.tablet {
+    gap: 48px;
+  }
+
+  // Línea de progreso ligada al scroll.
+  @include bp.desktop {
+    position: relative;
+    gap: 0;
+    padding-left: 40px;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 2px;
+      background: rgb(255 255 255 / 18%);
+    }
+
+    &::after {
+      background: #fff;
+      transform: scaleY(var(--progress, 0));
+      transform-origin: top;
+    }
+  }
+}
+
+.step {
+  display: grid;
+  gap: 8px;
+
+  @include bp.tablet {
+    grid-template-columns: 40% 1fr;
+    column-gap: var(--gutter);
+    align-content: start;
+  }
+
+  @include bp.desktop {
+    grid-template-columns: 1fr;
+    align-content: center;
+    min-height: 44vh;
+    opacity: 0.4;
+    transition: opacity var(--t-panel) ease-out;
+
+    &.is-active {
+      opacity: 1;
+    }
+  }
+}
+
+// Móvil y tablet: cada paso lleva su imagen.
+.step__media {
+  aspect-ratio: 16 / 10;
+  margin-bottom: 8px;
+  border-radius: var(--radius-media);
+
+  @include bp.tablet {
+    grid-row: 1 / span 3;
+    margin-bottom: 0;
+  }
+
+  @include bp.desktop {
+    display: none;
+  }
+}
+
+.step__number {
+  font:
+    600 0.8125rem / 1 ui-monospace,
+    monospace;
+  color: var(--steel);
+}
+
+.step__title {
+  font: 700 var(--fs-h3) / 1.24 var(--font-display);
+}
+
+.step__text {
+  max-width: 32em;
+  color: var(--steel-light);
+}
+
+.tech__cta {
+  width: 100%;
+  margin-top: 40px;
+
+  @include bp.tablet {
+    width: auto;
+  }
+
+  @include bp.desktop {
+    margin-top: 64px;
+  }
+}

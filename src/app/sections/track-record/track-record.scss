@@ -1,0 +1,129 @@
+@use 'breakpoints' as bp;
+
+.track {
+  padding-block: 56px;
+  background: var(--graphite-band);
+  color: #fff;
+
+  @include bp.desktop {
+    padding-block: 88px;
+  }
+}
+
+.track__grid {
+  display: grid;
+  gap: 40px;
+
+  @include bp.desktop {
+    grid-template-columns: 4fr 8fr;
+    gap: var(--gutter);
+    align-items: end;
+  }
+}
+
+.track__head {
+  display: grid;
+  gap: 12px;
+  max-width: 560px;
+}
+
+.track__metrics {
+  display: grid;
+  gap: 20px;
+  margin: 0;
+
+  @include bp.tablet {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gutter);
+  }
+}
+
+// Móvil: cifra y etiqueta en una línea. Desde tablet, la cifra arriba.
+.metric {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-left: 16px;
+  border-left: 1px solid rgb(255 255 255 / 20%);
+
+  @include bp.tablet {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 12px;
+    padding-left: 20px;
+  }
+}
+
+.metric__value {
+  min-width: 2.2ch;
+  margin: 0;
+  font: 900 var(--fs-figure) / 1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+
+  .pending {
+    font-size: 0.7em;
+    font-weight: 700;
+  }
+}
+
+.metric__label {
+  font: 600 var(--fs-label) / 1.35 var(--font-body);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+}
+
+.partners {
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.partners__inner {
+  display: grid;
+  gap: 12px;
+  padding-block: 20px;
+
+  @include bp.desktop {
+    grid-template-columns: 140px 1fr;
+    align-items: center;
+    gap: var(--gutter);
+  }
+}
+
+.partners__label {
+  font: 700 var(--fs-label) / 1.3 var(--font-body);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.partners__list {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.partners__chip {
+  display: grid;
+  flex: 1 0 auto;
+  place-items: center;
+  min-width: 128px;
+  height: 48px;
+  padding-inline: 16px;
+  border-radius: var(--radius);
+  background: #eceef0;
+  font:
+    500 0.75rem / 1 ui-monospace,
+    monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #59616b;
+}

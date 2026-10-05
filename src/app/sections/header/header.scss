@@ -1,0 +1,248 @@
+@use 'breakpoints' as bp;
+
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  border-bottom: 1px solid var(--line-on-dark);
+  color: #fff;
+  transition:
+    background-color var(--t-header) ease-out,
+    border-color var(--t-header) ease-out,
+    box-shadow var(--t-header) ease-out,
+    transform var(--t-header) ease-out;
+}
+
+.header--solid {
+  border-bottom-color: var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-header);
+  color: var(--graphite);
+}
+
+.header--hidden {
+  transform: translateY(-100%);
+}
+
+.header__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--gutter);
+  height: 64px;
+  transition: height var(--t-header) ease-out;
+
+  @include bp.desktop {
+    height: 88px;
+
+    .header--solid & {
+      height: 64px;
+    }
+  }
+}
+
+.header__logo {
+  flex: none;
+
+  img {
+    width: 124px;
+    height: auto;
+
+    @include bp.desktop {
+      width: 155px;
+    }
+  }
+}
+
+.header__nav {
+  display: none;
+  flex: 1;
+
+  @include bp.desktop {
+    display: block;
+  }
+}
+
+.header__menu {
+  display: flex;
+  justify-content: center;
+  gap: clamp(16px, 2.2vw, 36px);
+}
+
+.header__item {
+  position: relative;
+}
+
+.header__link {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  border-bottom: 2px solid transparent;
+  font: 600 0.9375rem / 1 var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--t-cta) ease-out;
+
+  @include bp.hover {
+    color: var(--red-tannin);
+
+    .header--solid & {
+      color: var(--red-action);
+    }
+  }
+
+  &.is-active {
+    border-bottom-color: currentColor;
+
+    .header--solid & {
+      color: var(--red-action);
+    }
+  }
+
+  &[aria-disabled='true'] {
+    color: var(--steel);
+    cursor: not-allowed;
+  }
+}
+
+.mega {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: min(1040px, 90vw);
+  padding-top: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-28%, -6px);
+  transition:
+    opacity var(--t-header) ease-out,
+    transform var(--t-header) ease-out,
+    visibility 0s linear var(--t-header);
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-28%, 0);
+    transition-delay: 0s;
+  }
+}
+
+.mega__panel {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-panel);
+  color: var(--graphite);
+}
+
+.mega__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.mega__link {
+  display: grid;
+  gap: 6px;
+  height: 100%;
+  padding: 24px;
+  border-left: 1px solid var(--line);
+  text-decoration: none;
+
+  li:first-child & {
+    border-left: 0;
+  }
+
+  @include bp.hover {
+    .mega__title {
+      color: var(--red-action);
+    }
+  }
+}
+
+.mega__number {
+  font:
+    600 0.75rem / 1 ui-monospace,
+    monospace;
+  color: var(--text-muted);
+}
+
+.mega__title {
+  font: 800 1.0625rem / 1.2 var(--font-display);
+  transition: color var(--t-cta) ease-out;
+}
+
+.mega__summary {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+
+  @include bp.desktop {
+    gap: 20px;
+    margin-left: 0;
+  }
+}
+
+.lang {
+  display: none;
+  gap: 8px;
+  font: 700 0.8125rem / 1 var(--font-body);
+
+  @include bp.desktop {
+    display: flex;
+  }
+}
+
+.lang__item[aria-disabled='true'] {
+  color: var(--steel);
+  cursor: not-allowed;
+}
+
+.header__cta {
+  display: none;
+  border-color: currentColor;
+
+  @include bp.tablet {
+    display: inline-flex;
+  }
+
+  .header--solid & {
+    border-color: var(--red-action);
+    background: var(--red-action);
+    color: #fff;
+  }
+
+  @include bp.hover {
+    background: #fff;
+    color: var(--graphite);
+
+    .header--solid & {
+      border-color: var(--red-action-hover);
+      background: var(--red-action-hover);
+      color: #fff;
+    }
+  }
+}
+
+.header__toggle {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+
+  @include bp.desktop {
+    display: none;
+  }
+}
