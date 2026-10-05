@@ -7,22 +7,31 @@ import {
 import express from 'express';
 import { join } from 'node:path';
 
+import { problem } from './server/contact-guards';
+import { contactProxy } from './server/contact-proxy';
+
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
 /**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/{*splat}', (req, res) => {
- *   // Handle API request
- * });
- * ```
+ * El formulario de contacto: se reenvía a la intranet, que está en la misma red, y se devuelve
+ * su respuesta. Sin `CONTACT_API_URL` responde 503 y el formulario ofrece el correo.
  */
+app.post('/api/contact', contactProxy(process.env['CONTACT_API_URL']));
+
+/**
+ * Nada más existe bajo /api. Sin esto, una ruta desconocida acabaría pintando la página.
+ */
+app.all('/api/{*splat}', (req, res) => {
+  const [status, message] =
+    req.path === '/api/contact' ? [405, 'Método no permitido.'] : [404, 'No encontrado.'];
+  res
+    .status(status)
+    .type('application/problem+json')
+    .send(JSON.stringify(problem(status, message)));
+});
 
 /**
  * Serve static files from /browser
