@@ -1,0 +1,66 @@
+name: Vista previa en GitHub Pages
+
+# Solo para ver cómo queda la landing en develop. No toca la imagen de Docker (eso es de main).
+on:
+  push:
+    branches: [ develop ]
+  workflow_dispatch:        # permite ejecutarlo manualmente desde la pestaña Actions
+
+permissions:
+  contents: read
+  pages: write              # publicar en Pages
+  id-token: write           # necesario para actions/deploy-pages
+
+# Una sola publicación a la vez; si llega otra, se cancela la anterior
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar pnpm (version fijada en package.json)
+        uses: pnpm/action-setup@v4
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Configurar Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      # Pages sirve el sitio bajo /<repo>/, asi que el base href cambia
+      - name: Construir
+        run: pnpm build --base-href "${{ steps.pages.outputs.base_path }}/"
+
+      # Pages es estatico: se publica solo la parte del navegador (index.html ya viene prerenderizado)
+      - name: Preparar el sitio
+        run: |
+          cp dist/tesla-landing-page/browser/index.html dist/tesla-landing-page/browser/404.html
+          touch dist/tesla-landing-page/browser/.nojekyll
+
+      - name: Subir artefacto
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/tesla-landing-page/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar en Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
