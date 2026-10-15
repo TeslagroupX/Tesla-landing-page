@@ -61,10 +61,10 @@ describe('Home', () => {
       link.getAttribute('href'),
     ]);
     expect(links).toEqual([
-      ['Privacidad', '/privacidad'],
+      ['Privacidad', 'privacidad'],
       ['Términos', null],
-      ['Cookies', '/cookies'],
-      ['Libro de Reclamaciones', '/libro-de-reclamaciones'],
+      ['Cookies', 'cookies'],
+      ['Libro de Reclamaciones', 'libro-de-reclamaciones'],
     ]);
   });
 });

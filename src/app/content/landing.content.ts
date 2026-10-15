@@ -211,14 +211,15 @@ export const COMPANY_LINKS: readonly LinkItem[] = [
 ];
 
 /**
- * Las páginas legales son rutas propias, prerenderizadas (`app.routes.ts`). El libro de
- * reclamaciones es físico: su página dice dónde pedirlo, no simula uno virtual.
+ * Las páginas legales son rutas propias, prerenderizadas (`app.routes.ts`). Sin barra inicial a
+ * propósito: se resuelven contra `<base href>`, que en la vista previa de GitHub Pages no es la
+ * raíz. El libro de reclamaciones es físico: su página dice dónde pedirlo, no simula uno virtual.
  */
 export const LEGAL_LINKS: readonly LinkItem[] = [
-  { label: 'Privacidad', href: '/privacidad' },
+  { label: 'Privacidad', href: 'privacidad' },
   { label: 'Términos', href: null },
-  { label: 'Cookies', href: '/cookies' },
-  { label: 'Libro de Reclamaciones', href: '/libro-de-reclamaciones' },
+  { label: 'Cookies', href: 'cookies' },
+  { label: 'Libro de Reclamaciones', href: 'libro-de-reclamaciones' },
 ];
 
 export const LEGAL_NAME = '© 2026 Power Energy & Automation S.A.C. (Tesla Group) · RUC 20559998649';

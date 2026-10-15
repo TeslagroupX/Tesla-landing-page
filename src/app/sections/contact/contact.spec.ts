@@ -101,7 +101,7 @@ describe('Contact', () => {
 
   it('should link the consent to the privacy notice, in another tab', () => {
     const link = page.querySelector('label[for="contact-consent"] a');
-    expect(link?.getAttribute('href')).toBe('/privacidad');
+    expect(link?.getAttribute('href')).toBe('privacidad');
     expect(link?.getAttribute('target')).toBe('_blank');
     expect(link?.textContent?.trim()).toBe('aviso de privacidad');
   });
