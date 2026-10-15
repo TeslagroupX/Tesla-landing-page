@@ -10,7 +10,7 @@ import { Privacy } from './pages/privacy/privacy';
  * una sale como HTML estático que se lee sin JavaScript.
  */
 export const routes: Routes = [
-  { path: '', component: Home, title: 'Tesla Group' },
+  { path: '', component: Home, title: 'Tesla Group · Integración industrial en Perú' },
   { path: 'privacidad', component: Privacy, title: 'Aviso de privacidad · Tesla Group' },
   { path: 'cookies', component: Cookies, title: 'Cookies · Tesla Group' },
   {

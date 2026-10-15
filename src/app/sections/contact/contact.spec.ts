@@ -2,6 +2,7 @@ import { HttpEventType, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { PRIVACY_NOTICE } from '../../legal/privacy-notice';
 import { Contact } from './contact';
 import { GENERIC_ERROR } from './contact.service';
 
@@ -98,6 +99,13 @@ describe('Contact', () => {
     expect(errorOf('email')).toBeUndefined();
   });
 
+  it('should link the consent to the privacy notice, in another tab', () => {
+    const link = page.querySelector('label[for="contact-consent"] a');
+    expect(link?.getAttribute('href')).toBe('/privacidad');
+    expect(link?.getAttribute('target')).toBe('_blank');
+    expect(link?.textContent?.trim()).toBe('aviso de privacidad');
+  });
+
   it('should not send without consent', async () => {
     fillValid();
     field('consent').click();
@@ -141,6 +149,8 @@ describe('Contact', () => {
     expect(body.get('sector')).toBe('mineria');
     expect(body.get('solution')).toBe('power_system');
     expect(body.get('consent')).toBe('true');
+    expect(body.get('noticeVersion')).toBe(PRIVACY_NOTICE.version);
+    expect(body.get('noticeHash')).toBe(PRIVACY_NOTICE.sha256);
     expect(body.get('website')).toBe('');
     expect((body.get('attachment') as File).name).toBe('bases.pdf');
 

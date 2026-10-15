@@ -210,11 +210,15 @@ export const COMPANY_LINKS: readonly LinkItem[] = [
   { label: 'Trabaja con nosotros', href: null },
 ];
 
+/**
+ * Las páginas legales son rutas propias, prerenderizadas (`app.routes.ts`). El libro de
+ * reclamaciones es físico: su página dice dónde pedirlo, no simula uno virtual.
+ */
 export const LEGAL_LINKS: readonly LinkItem[] = [
-  { label: 'Privacidad', href: null },
+  { label: 'Privacidad', href: '/privacidad' },
   { label: 'Términos', href: null },
-  { label: 'Cookies', href: null },
-  { label: 'Libro de Reclamaciones', href: null },
+  { label: 'Cookies', href: '/cookies' },
+  { label: 'Libro de Reclamaciones', href: '/libro-de-reclamaciones' },
 ];
 
 export const LEGAL_NAME = '© 2026 Power Energy & Automation S.A.C. (Tesla Group) · RUC 20559998649';

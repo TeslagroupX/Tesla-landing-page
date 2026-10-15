@@ -13,7 +13,8 @@ export const COOKIES_REVIEWED = '2026-10-15';
  * Revisado contra el código y el despliegue: la aplicación no escribe cookies ni usa
  * `localStorage`, `sessionStorage` ni IndexedDB, y no carga analítica ni publicidad. Lo único
  * que puede dejar una cookie es Cloudflare, que está delante del sitio, y solo cuando sus
- * protecciones contra bots o un desafío lo piden. Si algo de esto cambia (una herramienta de
+ * protecciones contra bots o un desafío lo piden. Las fuentes de Google (`index.html`) no
+ * dejan cookies, pero Google recibe la IP: se dice. Si algo de esto cambia (una herramienta de
  * medición, un chat), esta página cambia con ello y, si la cookie no es técnica, hay que pedir
  * consentimiento ANTES de instalarla.
  */
@@ -24,6 +25,10 @@ Este sitio no instala cookies propias ni guarda información en el almacenamient
 ## Cookies de seguridad de Cloudflare
 
 El sitio se sirve a través de Cloudflare, que lo protege frente a ataques y tráfico automatizado. Cuando sus protecciones lo requieren, Cloudflare puede instalar una cookie técnica propia, como __cf_bm o cf_clearance, para distinguir a una persona de un programa automatizado. Son cookies estrictamente necesarias para la seguridad del sitio, no sirven para seguir su navegación por otros sitios y caducan en poco tiempo.
+
+## Tipografías
+
+Las tipografías del sitio se descargan de Google Fonts. Esa descarga no instala cookies, pero los servidores de Google reciben la dirección IP y los datos técnicos del navegador, como ocurre con cualquier recurso que se carga desde otro servidor.
 
 ## Cómo gestionarlas
 
