@@ -62,5 +62,12 @@
     <a class="contact-email" href="mailto:proyectos@teslagroup.pe">proyectos@teslagroup.pe</a>
   </section>
 
-  <footer>© 2026 Tesla Group. Todos los derechos reservados.</footer>
+  <footer>
+    <p>© 2026 Tesla Group. Todos los derechos reservados.</p>
+    <nav class="legal-links" aria-label="Información legal">
+      @for (page of legalPages; track page.path) {
+        <a [routerLink]="page.path">{{ page.label }}</a>
+      }
+    </nav>
+  </footer>
 </main>

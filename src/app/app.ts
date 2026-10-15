@@ -1,11 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
+/** El marco: cada ruta (`app.routes.ts`) pinta su página entera. */
 @Component({
   selector: 'app-root',
-  imports: [],
-  templateUrl: './app.html',
-  styleUrl: './app.scss'
+  imports: [RouterOutlet],
+  template: '<router-outlet />',
 })
-export class App {
-  protected readonly title = signal('tesla-landing-page');
-}
+export class App {}
