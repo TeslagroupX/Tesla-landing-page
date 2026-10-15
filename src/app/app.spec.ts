@@ -1,57 +1,50 @@
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { App } from './app';
+import { Router, provideRouter } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
 
-describe('App', () => {
-  let page: HTMLElement;
+import { routes } from './app.routes';
+
+describe('App routes', () => {
+  let harness: RouterTestingHarness;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [App],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
-    }).compileComponents();
-
-    const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    page = fixture.nativeElement as HTMLElement;
+    TestBed.configureTestingModule({
+      providers: [provideRouter(routes), provideHttpClient(), provideHttpClientTesting()],
+    });
+    harness = await RouterTestingHarness.create();
   });
 
-  it('should render the hero headline as the only h1', () => {
-    const headlines = page.querySelectorAll('h1');
-    expect(headlines.length).toBe(1);
-    expect(headlines[0].textContent).toContain(
+  const page = (): HTMLElement => harness.routeNativeElement as HTMLElement;
+
+  it('should render the landing at the root', async () => {
+    await harness.navigateByUrl('/');
+    expect(page().querySelector('h1')?.textContent).toContain(
       'Integración industrial para operaciones que no pueden detenerse.',
     );
   });
 
-  it('should render the blocks of the wireframe in order', () => {
-    const sections = Array.from(page.querySelectorAll('main > * > section')).map(
-      (section) => section.id,
-    );
-    expect(sections).toEqual([
-      'inicio',
-      'soluciones',
-      'sectores',
-      'casos',
-      'tecnologia',
-      'contacto',
-    ]);
-    expect(page.querySelector('header')).toBeTruthy();
-    expect(page.querySelector('footer')).toBeTruthy();
+  it('should render the privacy notice with its version and date', async () => {
+    await harness.navigateByUrl('/privacidad');
+    expect(page().querySelector('h1')?.textContent).toBe('Aviso de privacidad');
+    expect(page().textContent).toContain('Versión 1.0 · Vigente desde el 15 de octubre de 2026');
+    expect(page().querySelector('h2')?.textContent).toBe('En resumen');
   });
 
-  it('should offer a skip link to the main content', () => {
-    const skip = page.querySelector('a');
-    expect(skip?.getAttribute('href')).toBe('#contenido');
-    expect(page.querySelector('main')?.id).toBe('contenido');
+  it('should render the cookies page', async () => {
+    await harness.navigateByUrl('/cookies');
+    expect(page().querySelector('h1')?.textContent).toBe('Cookies');
   });
 
-  it('should keep a destination that is not ready visible but disabled', () => {
-    const about = Array.from(page.querySelectorAll('header nav a')).find(
-      (link) => link.textContent?.trim() === 'Nosotros',
-    );
-    expect(about?.getAttribute('aria-disabled')).toBe('true');
-    expect(about?.hasAttribute('href')).toBe(false);
+  it('should say that the complaints book is a physical one', async () => {
+    await harness.navigateByUrl('/libro-de-reclamaciones');
+    expect(page().querySelector('h1')?.textContent).toBe('Libro de Reclamaciones');
+    expect(page().textContent).toContain('Libro de Reclamaciones físico en sus oficinas');
+  });
+
+  it('should send an unknown path to the landing', async () => {
+    await harness.navigateByUrl('/no-existe');
+    expect(TestBed.inject(Router).url).toBe('/');
   });
 });
