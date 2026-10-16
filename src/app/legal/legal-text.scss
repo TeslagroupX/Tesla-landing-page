@@ -1,0 +1,48 @@
+// Texto corrido, sobrio: sin cajas ni acentos de color. «En resumen» se separa del resto solo
+// con una línea fina, como en la política de la intranet.
+
+:host {
+  display: block;
+}
+
+.lt__section + .lt__section {
+  margin-top: 1.75rem;
+}
+
+.lt__summary {
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.lt__heading {
+  margin: 0 0 0.625rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #19181c;
+}
+
+.lt__paragraph {
+  margin: 0;
+  line-height: 1.7;
+  color: #34383d;
+  text-align: justify;
+  hyphens: auto;
+  overflow-wrap: break-word;
+
+  & + & {
+    margin-top: 0.875rem;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lt__paragraph {
+    text-align: left;
+  }
+}

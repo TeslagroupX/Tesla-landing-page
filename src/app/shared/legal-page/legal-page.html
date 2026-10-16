@@ -1,0 +1,30 @@
+<article class="legal">
+  <a class="legal__home" routerLink="/">Tesla Group</a>
+
+  <header class="legal__header">
+    <h1>{{ heading() }}</h1>
+    @if (lead()) {
+      <p class="legal__lead">{{ lead() }}</p>
+    }
+    @if (meta()) {
+      <p class="legal__meta">{{ meta() }}</p>
+    }
+  </header>
+
+  <div class="legal__body">
+    <ng-content />
+  </div>
+
+  <nav class="legal__nav" aria-label="Información legal">
+    <ul>
+      @for (page of pages; track page.path) {
+        <li>
+          <a [routerLink]="page.path" routerLinkActive="is-current" ariaCurrentWhenActive="page">{{
+            page.label
+          }}</a>
+        </li>
+      }
+      <li><a routerLink="/">Volver al inicio</a></li>
+    </ul>
+  </nav>
+</article>

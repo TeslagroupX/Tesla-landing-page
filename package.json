@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "huella:aviso": "node scripts/huella-aviso.mjs",
     "serve:ssr:tesla-landing-page": "node dist/tesla-landing-page/server/server.mjs"
   },
   "private": true,

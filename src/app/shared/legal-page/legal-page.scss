@@ -1,0 +1,107 @@
+// Una columna de lectura, como un documento: ancho de unas 70 letras, sin adornos.
+
+:host {
+  display: block;
+  font-family: var(
+    --font-body,
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif
+  );
+  color: #19181c;
+  background: #fff;
+}
+
+.legal {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 3rem;
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
+
+.legal__home {
+  display: inline-block;
+  margin-bottom: 2rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6b7280;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    color: #19181c;
+  }
+}
+
+.legal__header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #19181c;
+}
+
+h1 {
+  margin: 0;
+  font-family: var(--font-display, inherit);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.legal__lead {
+  margin: 0.5rem 0 0;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.legal__meta {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.legal__nav {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e2e2e2;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    font-size: 0.875rem;
+    color: #4b5563;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover,
+    &:focus-visible {
+      color: #19181c;
+    }
+  }
+
+  .is-current {
+    color: #19181c;
+    text-decoration: none;
+    font-weight: 600;
+  }
+}
+
+a:focus-visible {
+  outline: 2px solid #19181c;
+  outline-offset: 3px;
+}
