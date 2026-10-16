@@ -14,7 +14,7 @@ describe('PRIVACY_NOTICE', () => {
 
   it('should be version 1.0', () => {
     expect(PRIVACY_NOTICE.version).toBe('1.0');
-    expect(longDate(PRIVACY_NOTICE.effectiveFrom)).toBe('15 de octubre de 2026');
+    expect(longDate(PRIVACY_NOTICE.effectiveFrom)).toBe('16 de octubre de 2026');
   });
 
   it('should hash the same text whatever the line endings', () => {
