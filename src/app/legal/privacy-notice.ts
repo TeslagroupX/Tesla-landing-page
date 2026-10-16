@@ -26,7 +26,7 @@ export function canonicalNoticeText(source: string): string {
 export const PRIVACY_NOTICE = {
   version: '1.0',
   /** Fecha de vigencia (Lima). No forma parte de la huella: la acompaña. */
-  effectiveFrom: '2026-10-15',
+  effectiveFrom: '2026-10-16',
   text: canonicalNoticeText(NOTICE_SOURCE),
   /** SHA-256 en hexadecimal de `text` en UTF-8. La genera `scripts/huella-aviso.mjs`. */
   sha256: '7f882af776edbeef7018703e1e82161b1fa9f81357d283c7c400147210e10d68',

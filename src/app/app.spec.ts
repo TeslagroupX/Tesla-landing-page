@@ -28,7 +28,7 @@ describe('App routes', () => {
   it('should render the privacy notice with its version and date', async () => {
     await harness.navigateByUrl('/privacidad');
     expect(page().querySelector('h1')?.textContent).toBe('Aviso de privacidad');
-    expect(page().textContent).toContain('Versión 1.0 · Vigente desde el 15 de octubre de 2026');
+    expect(page().textContent).toContain('Versión 1.0 · Vigente desde el 16 de octubre de 2026');
     expect(page().querySelector('h2')?.textContent).toBe('En resumen');
   });
 
