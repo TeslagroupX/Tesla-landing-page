@@ -239,7 +239,11 @@
               [attr.aria-invalid]="shows('consent') || null"
               [attr.aria-describedby]="shows('consent') ? 'contact-consent-error' : null"
             />
-            <label for="contact-consent">Acepto el tratamiento de mis datos (Ley N.º 29733)</label>
+            <label for="contact-consent">
+              He leído el
+              <a href="privacidad" target="_blank" rel="noopener">aviso de privacidad</a>
+              y acepto el tratamiento de mis datos (Ley N.º 29733)
+            </label>
             @if (shows('consent')) {
               <p class="field__error consent__error" id="contact-consent-error">
                 {{ message('consent') }}

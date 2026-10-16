@@ -1,4 +1,5 @@
 import { SECTORS, SOLUTIONS } from '../../content/landing.content';
+import { PRIVACY_NOTICE } from '../../legal/privacy-notice';
 
 /**
  * Las reglas y los códigos del formulario. Son los mismos que valida el backend
@@ -79,6 +80,10 @@ export function toFormData(request: ContactRequest, attachment: File | null): Fo
   data.set('solution', request.solution);
   data.set('description', request.description.trim());
   data.set('consent', String(request.consent));
+  // Qué aviso se aceptó: el que enlaza la casilla, el mismo que viaja en este build. La
+  // intranet guarda los dos con la solicitud y rechaza un envío sin ellos (PRV-RF-14).
+  data.set('noticeVersion', PRIVACY_NOTICE.version);
+  data.set('noticeHash', PRIVACY_NOTICE.sha256);
   data.set('website', request.website);
   if (attachment) data.set('attachment', attachment, attachment.name);
   return data;

@@ -1,3 +1,4 @@
+import { PRIVACY_NOTICE } from '../../legal/privacy-notice';
 import { attachmentProblem, formatBytes, toFormData } from './contact.model';
 
 function fileOf(name: string, size: number): File {
@@ -69,5 +70,26 @@ describe('toFormData', () => {
     expect(data.get('description')).toBe('Tablero de distribución.');
     expect(data.get('consent')).toBe('true');
     expect(data.has('attachment')).toBe(false);
+  });
+
+  it('should say which privacy notice was accepted', () => {
+    const data = toFormData(
+      {
+        name: 'Ana Torres',
+        company: 'Minera del Norte',
+        email: 'ana@minera.pe',
+        phone: '944 000 000',
+        sector: 'mineria',
+        solution: 'por_definir',
+        description: 'Tablero de distribución.',
+        consent: true,
+        website: '',
+      },
+      null,
+    );
+
+    expect(data.get('noticeVersion')).toBe('1.0');
+    expect(data.get('noticeHash')).toBe(PRIVACY_NOTICE.sha256);
+    expect(data.get('noticeHash')).toMatch(/^[0-9a-f]{64}$/);
   });
 });

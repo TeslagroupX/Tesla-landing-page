@@ -38,6 +38,9 @@
                 "src/styles"
               ]
             },
+            "loader": {
+              ".md": "text"
+            },
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {

@@ -1,0 +1,2 @@
+# El aviso de privacidad se firma con SHA-256: sus saltos de linea son LF en todas partes.
+src/app/legal/*.md text eol=lf
